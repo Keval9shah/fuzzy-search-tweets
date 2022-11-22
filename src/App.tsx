@@ -16,20 +16,29 @@ export default function App() {
     ];
 
     function search(searchPhrase: string) {
-        cards.forEach(card => {
+        let isBroken = false;
+        for (let index = 0; index < cards.length; index++) {
+            const card = cards[index];
             card.indexes = [];
             let text = (card.title+' '+card.description).toLowerCase();
             let searchIndex = 0;
-            searchPhrase.split("").forEach((letter) => {
+            for (let index = 0; index < searchPhrase.length; index++) {
+                const letter = searchPhrase[index];
                 let oldIndex = searchIndex;
                 searchIndex = 1 + text.slice(searchIndex).indexOf(letter);
-                searchIndex = searchIndex + oldIndex;
-                if(searchIndex > oldIndex) {
-                    card.indexes.push(searchIndex);
-                } else {card.indexes.push(0)}
-            })
-        })
-        
+                if(searchIndex > 0) {
+                    card.indexes.push(searchIndex + oldIndex);
+                } else {
+                    card.indexes.push(0);
+                    isBroken = true;
+                    break;
+                }
+            }
+            if (isBroken) {
+                isBroken = false;
+                break;
+            }
+        }
         setSearchResult(cards.filter(x => x.indexes.reduce(
             (prev, current) => prev && current>0, true)));
     }
