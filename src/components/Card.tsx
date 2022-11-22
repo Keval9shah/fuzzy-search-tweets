@@ -1,13 +1,15 @@
 // import React from 'react';
-type CardPropType = {
-    title:string,
-    description: string
-}
-export default function Card(props:CardPropType) {
+import { CardType } from "../types";
+import './card.css';
+
+export default function Card(props:CardType) {
     return (
         <>
-            {props.title}
-            {props.description}
+            <div className="card">
+                <div className="title">{props.title}</div>
+                <div className="border-bottom"></div>
+                <div className="description">{props.description}</div>
+            </div>
         </>
     );
 }
