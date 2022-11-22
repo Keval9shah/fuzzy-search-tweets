@@ -1,6 +1,13 @@
 .App {
-  text-align: center;
-  margin: 2em 0;
+  margin: 1.5em 0;
+}
+
+.search-parent {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 150px;
+  width: 1000px;
+  justify-content: center;
 }
 
 .row {
