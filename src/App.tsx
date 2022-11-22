@@ -16,7 +16,6 @@ export default function App() {
     ];
 
     function search(searchPhrase: string) {
-        let isBroken = false;
         for (let index = 0; index < cards.length; index++) {
             const card = cards[index];
             card.indexes = [];
@@ -26,17 +25,13 @@ export default function App() {
                 const letter = searchPhrase[index];
                 let oldIndex = searchIndex;
                 searchIndex = 1 + text.slice(searchIndex).indexOf(letter);
-                if(searchIndex > 0) {
-                    card.indexes.push(searchIndex + oldIndex);
+                searchIndex = searchIndex + oldIndex;
+                if(searchIndex > oldIndex) {
+                    card.indexes.push(searchIndex);
                 } else {
                     card.indexes.push(0);
-                    isBroken = true;
                     break;
                 }
-            }
-            if (isBroken) {
-                isBroken = false;
-                break;
             }
         }
         setSearchResult(cards.filter(x => x.indexes.reduce(
@@ -45,13 +40,11 @@ export default function App() {
 
     useEffect(() => {
         search("");
-    }, []);
+    });
 
     return (
         <div className="App">
-            <div className="search-parent">
-                <input className="searchbox" type="text" placeholder="Search" onChange={(e) => search(e.target.value)} />
-            </div>
+            <input className="searchbox" type="text" placeholder="Search" onChange={(e) => search(e.target.value)} />
             <div className='row'>
                 {
                     searchResult.length>0

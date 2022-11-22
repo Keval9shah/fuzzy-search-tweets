@@ -1,21 +1,16 @@
 .App {
-  margin: 1.5em 0;
-}
-
-.search-parent {
+  margin: 1.5em auto;
+  width: 82vw;
+  max-width: 1200px;
   display: flex;
-  flex-wrap: wrap;
-  margin: 0 150px;
-  width: 1000px;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .row {
   display: flex;
   flex-wrap: wrap;
   padding: 1em;
-  margin: 0 150px;
-  width: 1000px;
 }
 
 .searchbox {
