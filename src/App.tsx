@@ -40,7 +40,7 @@ export default function App() {
 
     useEffect(() => {
         search("");
-    });
+    },[]);
 
     return (
         <div className="App">
