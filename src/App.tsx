@@ -20,11 +20,12 @@ export default function App() {
             card.indexes = [];
             let text = (card.title+' '+card.description).toLowerCase();
             let searchIndex = 0;
-            searchPhrase.split("").forEach((letter,index) => {
+            searchPhrase.split("").forEach((letter) => {
                 let oldIndex = searchIndex;
                 searchIndex = 1 + text.slice(searchIndex).indexOf(letter);
-                if(searchIndex > 0) {
-                    card.indexes.push(searchIndex + oldIndex);
+                searchIndex = searchIndex + oldIndex;
+                if(searchIndex > oldIndex) {
+                    card.indexes.push(searchIndex);
                 } else {card.indexes.push(0)}
             })
         })
