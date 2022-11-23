@@ -7,7 +7,7 @@ export default function Card(props:CardType) {
         <>
             <div className="card">
                 <span className="title-parent">
-                    <div className="title">
+                    <div title={props.title} className="title">
                         {
                             props.title.split("").map((letter,index) => {
                                 return props.indexes.includes(index + 1)
