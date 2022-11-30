@@ -1,12 +1,12 @@
 // import React from 'react';
-import { CardType } from "../types";
+import { CardType, SearchResult } from "../types";
 import './card.css';
 
-export default function Card(props:CardType) {
+export default function Card(props: SearchResult) {
     return (
         <>
             <div className="card">
-                <span className="title-parent">
+                <div className="title-parent">
                     <div title={props.title} className="title">
                         {
                             props.title.split("").map((letter,index) => {
@@ -16,8 +16,8 @@ export default function Card(props:CardType) {
                             })
                         }
                     </div>
-                </span>
-                <div className="border-bottom"></div>
+                    <div className="border-bottom"></div>
+                </div>
                 <div className="description">
                     {
                         props.description.split("").map((letter,index) => {
