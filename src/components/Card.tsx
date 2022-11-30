@@ -2,15 +2,15 @@
 import { CardType, SearchResult } from "../types";
 import './card.css';
 
-export default function Card(props: SearchResult) {
+export default function Card({ title, description, indexes }: SearchResult) {
     return (
         <>
             <div className="card">
                 <div className="title-parent">
-                    <div title={props.title} className="title">
+                    <div title={title} className="title">
                         {
-                            props.title.split("").map((letter,index) => {
-                                return props.indexes.includes(index + 1)
+                            title.split("").map((letter,index) => {
+                                return indexes.includes(index + 1)
                                 ? <span key={index} className="found">{letter}</span>
                                 : letter
                             })
@@ -20,8 +20,8 @@ export default function Card(props: SearchResult) {
                 </div>
                 <div className="description">
                     {
-                        props.description.split("").map((letter,index) => {
-                            return props.indexes.includes(props.title.length + 2 + index)
+                        description.split("").map((letter,index) => {
+                            return indexes.includes(title.length + 2 + index)
                             ? <span key={index} className="found">{letter}</span>
                             : letter
                         })

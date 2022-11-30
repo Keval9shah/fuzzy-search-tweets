@@ -49,7 +49,7 @@ export default function App() {
             let text = (card.title+' '+card.description).toLowerCase();
             if(text.includes(word)) {
                 card.indexes = card.indexes.concat(Array.from(new Array(word.length), (x, i) => i + text.indexOf(word) + 1));
-                card.preference = card.preference || true;
+                card.preference = true;
                 continue;
             }
             card.preference = card.preference || false;
