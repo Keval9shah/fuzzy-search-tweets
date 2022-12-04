@@ -1,27 +1,27 @@
 // import React from 'react';
-import { CardType } from "../types";
+import { CardType, SearchResult } from "../types";
 import './card.css';
 
-export default function Card(props:CardType) {
+export default function Card({ title, description, indexes }: SearchResult) {
     return (
         <>
             <div className="card">
-                <span className="title-parent">
-                    <div title={props.title} className="title">
+                <div className="title-parent">
+                    <div title={title} className="title">
                         {
-                            props.title.split("").map((letter,index) => {
-                                return props.indexes.includes(index + 1)
+                            title.split("").map((letter,index) => {
+                                return indexes.includes(index + 1)
                                 ? <span key={index} className="found">{letter}</span>
                                 : letter
                             })
                         }
                     </div>
-                </span>
-                <div className="border-bottom"></div>
+                    <div className="border-bottom"></div>
+                </div>
                 <div className="description">
                     {
-                        props.description.split("").map((letter,index) => {
-                            return props.indexes.includes(props.title.length + 2 + index)
+                        description.split("").map((letter,index) => {
+                            return indexes.includes(title.length + 2 + index)
                             ? <span key={index} className="found">{letter}</span>
                             : letter
                         })

@@ -1,12 +1,11 @@
 .card {
     text-align: left;
-    width: 200px;
-    padding: 1em;
-    border-radius: 3px;
+    width: 232px;
+    border-radius: 8px;
     margin: 0.5em;
-    height: 200px;
+    height: 232px;
     overflow: hidden;
-    border: 1px solid black;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 7%), 0 2px 4px rgb(0 0 0 / 5%), 0 12px 24px rgb(0 0 0 / 5%);
 }
 
 .title {
@@ -19,25 +18,42 @@
 }
 
 .title-parent {
+    padding: 1em;
+    padding-bottom: 0;
     display: flex;
     flex-direction: column;
-    height: 43px;
+    height: calc(44px + 0.8em);
     justify-content: flex-end;
+    background-color: rgba(204, 233, 238, 0.34);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2.5px);
+    -webkit-backdrop-filter: blur(2.5px);
+    border: 1px solid 1px solid rgba(204, 233, 238, 0.3);
 }
 
 .border-bottom {
+    position: relative;
+    top: 1.5px;
     display: block;
-    margin: 8px 0 7px 0;
+    margin: 12px 0 0 0;
     width: 100%;
-    height: 1px;
-    background-color: rgb(164, 164, 164);
+    height: 1.5px;
+    background-color: rgb(137, 137, 137);
     content: "";
 }
 
 .description {
     text-align: justify;
+    margin: 1em;
+    margin-top: 0.8em;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    overflow: hidden;
 }
 
 .found {
-    background-color: yellow;
+    color: rgb(0, 0, 0);
+    background-color: rgb(233, 233, 91);
+    text-decoration: underline;
 }
