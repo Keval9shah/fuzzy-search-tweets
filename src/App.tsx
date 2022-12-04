@@ -72,22 +72,22 @@ export default function App() {
     //     break;
     // }
 
-    const debounce = (func: Function, wait: number) => {
-        let timeoutID: number;
-        return function mainFunction(searchPhrase: string) {
-            const later = () => {
-                clearTimeout(timeoutID);
-                func(searchPhrase);
-            };
-            clearTimeout(timeoutID);
-            timeoutID = setTimeout(later, wait);
-        };
-    };
+    let timeoutID: number;
     /**
-     * debounces search by 500 ms.
-     * @param searchPhrase The substring to search for.
+     * delays the function call by a certain time and
+     * only executes the last call in that time frame.
+     * @param wait debounce time in ms.
+     * @param func The function to debounce.
+     * @param args Arguments of the function.
      */
-    const debounceSearch = debounce(search,300);
+    function debounce(wait: number, func: Function, ...args: any) {
+        const later = () => {
+            clearTimeout(timeoutID);
+            func(...args);
+        };
+        clearTimeout(timeoutID);
+        timeoutID = setTimeout(later, wait);
+    };
 
     useEffect(() => {
         search("");
@@ -99,7 +99,7 @@ export default function App() {
             <div className="top-bar">
                 <img className='icon' src={Logo} alt="Keval's Blogs"/>
                 <div className="search-parent">
-                    <input className="searchbox" spellCheck="false" type="text" placeholder="Search" onChange={(e) => debounceSearch(e.target.value)} />
+                    <input className="searchbox" spellCheck="false" type="text" placeholder="Search" onChange={(e) => debounce(500, search, e.target.value)} />
                     <div className="search-icon-container"><img src={searchIcon} /></div>
                 </div>
                 <div className="addbox" onClick={add}><span style={{position: 'relative', top: '-11px'}}>Add </span><span style={{position: 'relative', top: '-10px', fontSize: '27px'}}>+</span></div>
