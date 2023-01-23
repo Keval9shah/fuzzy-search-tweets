@@ -1,7 +1,7 @@
 // import React from 'react';
 import './App.css';
 import Card from './components/Card';
-import { CardType, SearchResult } from "./types";
+import { ArrayOfStringObj, CardType, SearchResult } from "./types";
 import { useEffect, useState } from 'react';
 import searchIcon from './assets/search.svg';
 import Logo from './assets/logo.svg';
@@ -9,7 +9,7 @@ import { debounce } from './utils';
 
 export default function App() {
 
-    const [searchResult,setSearchResult] = useState([] as SearchResult[]);
+    const [searchResults, setSearchResults] = useState([] as SearchResult[]);
     let cards: CardType[] = [
         {title:"Beijing faces 'most severe Covid test' amid deaths", description:"Three deaths have been reported in Beijing where cases have been rising despite China's strict zero-Covid policy."},
         {title:"Kosovo flare-up fears over car number plate row", description:"Talks at the EU fail to settle a row over Serbian number plates, fuelling Kosovo violence fears."},
@@ -24,21 +24,22 @@ export default function App() {
     }
 
     /**
-     * Returns the indexes of letters in the search string and modifies 
-     * the indexes of the cards accordingly,
-     * sets preference flag true if the whole word is found.
+     * adds the indexes of letters in the search string 
+     * found in the text each text in the array.
+     * sorts results according to the number of whole words found.
      * @param searchPhrase The substring to search for.
      */
-    function search(searchPhrase: string) {
+    function search(searchPhrase: string, textArr?: ArrayOfStringObj) {
         searchPhrase = searchPhrase.toLowerCase();
         (cards as SearchResult[]).forEach(card => {
             card.indexes = [];
-            card.preference = false;
+            card.wholeWordsFound = 0;
         });
-        searchPhrase.split(" ").forEach(
-            word => searchWord(word)
-        )
-        setSearchResult((cards as SearchResult[]).filter(x => !x.indexes.includes(0)));
+        searchPhrase.split(" ").forEach(word => searchWord(word));
+        setSearchResults((cards as SearchResult[])
+            .filter(x => !x.indexes.includes(0))
+            .sort()
+        );
     }
 
     function searchWord(word: string) {
@@ -50,10 +51,9 @@ export default function App() {
             let text = (card.title+' '+card.description).toLowerCase();
             if(text.includes(word)) {
                 card.indexes = card.indexes.concat(Array.from(new Array(word.length), (x, i) => i + text.indexOf(word) + 1));
-                card.preference = true;
+                card.wholeWordsFound += 1;
                 continue;
             }
-            card.preference = card.preference || false;
             let searchIndex = 0;
             for (let index = 0; index < word.length; index++) {
                 const letter = word[index];
@@ -67,11 +67,6 @@ export default function App() {
             }
         }
     }
-    // difference = searchIndex - card.indexes[0];
-    // if(difference>(5*word.length)) { // removes irrelevant results.
-    //     card.indexes.push(0);
-    //     break;
-    // }
 
     useEffect(() => {
         search("");
@@ -84,14 +79,14 @@ export default function App() {
                 <img className='icon' src={Logo} alt="Keval's Blogs"/>
                 <div className="search-parent">
                     <input className="searchbox" spellCheck="false" type="text" placeholder="Search" onChange={(e) => debounce(500, search, e.target.value)} />
-                    <div className="search-icon-container"><img src={searchIcon} /></div>
+                    <div className="search-icon-container"><img style={{cursor: 'pointer'}} src={searchIcon} /></div>
                 </div>
-                <div className="addbox" onClick={add}><span style={{position: 'relative', top: '-11px'}}>Add </span><span style={{position: 'relative', top: '-10px', fontSize: '27px'}}>+</span></div>
+                <div className="addbox" onClick={add}><span style={{position: 'relative', top: '-12px'}}>Add </span><span style={{position: 'relative', top: '-10px', fontSize: '27px'}}>+</span></div>
             </div>
             <div className='row'>
                 {
-                    searchResult.length>0
-                    ? [...searchResult.filter(x => x.preference),...searchResult.filter(x => !x.preference)].map((card, index) =>
+                    searchResults.length>0
+                    ? searchResults.map((card, index) =>
                         <Card key={index} title={card.title} description={card.description} indexes={card.indexes} />
                     )
                     : <div>No Search Results Found.</div>

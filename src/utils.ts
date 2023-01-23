@@ -15,4 +15,16 @@ function debounce(wait: number, func: Function, ...args: any) {
     timeoutID = setTimeout(later, wait);
 };
 
-export {debounce};
+function showLoading() {
+    
+}
+
+export { debounce, showLoading };
+
+
+// For searchWord Method
+// difference = searchIndex - card.indexes[0];
+// if(difference>(5*word.length)) { // removes irrelevant results.
+//     card.indexes.push(0);
+//     break;
+// }
